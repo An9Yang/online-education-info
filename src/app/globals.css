@@ -1,26 +1,88 @@
 @import "tailwindcss";
 
+@theme {
+  --color-primary: #0F4C5C;
+  --color-primary-dark: #0A3641;
+  --color-primary-light: #1A6B7C;
+
+  --color-accent: #E36414;
+  --color-accent-hover: #FB8B24;
+
+  --color-cream: #FDF8F3;
+  --color-sand: #F2ECE4;
+  --color-surface: #FFFFFF;
+  --color-surface-hover: #FAFAFA;
+
+  --color-text-main: #1A1A1A;
+  --color-text-muted: #666666;
+  --color-text-light: #999999;
+
+  --color-border: #E6E6E6;
+  --color-border-light: #F0F0F0;
+
+  --font-serif: 'Fraunces', serif;
+  --font-sans: 'DM Sans', sans-serif;
+
+  --shadow-soft: 0 4px 20px -2px rgba(15, 76, 92, 0.08);
+  --shadow-medium: 0 10px 40px -10px rgba(15, 76, 92, 0.12);
+  --shadow-hard: 0 20px 60px -15px rgba(15, 76, 92, 0.2);
+
+  --radius-xl: 32px;
+  --radius-lg: 20px;
+  --radius-md: 12px;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --background: #FDF8F3;
+  --foreground: #1A1A1A;
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-serif);
+}
+
+/* Utilities */
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.glass-dark {
+  background: rgba(15, 76, 92, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.noise-bg {
+  position: relative;
+}
+
+.noise-bg::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+  opacity: 0.4;
 }
