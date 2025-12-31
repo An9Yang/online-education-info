@@ -1,21 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { Search, User, Globe, Menu, X } from "lucide-react";
-import { useState, useEffect } from "react";
+import { Search, Globe, Menu, X } from "lucide-react";
+import { useState } from "react";
 import clsx from "clsx";
 
 export function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [isScrolled, setIsScrolled] = useState(false);
-
-    useEffect(() => {
-        const handleScroll = () => {
-            setIsScrolled(window.scrollY > 20);
-        };
-        window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
-    }, []);
 
     const navigation = [
         { name: "Schools", href: "/schools" },
@@ -24,58 +15,50 @@ export function Header() {
     ];
 
     return (
-        <header
-            className={clsx(
-                "fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out border-b",
-                isScrolled
-                    ? "glass py-3 border-white/20"
-                    : "bg-transparent py-5 border-transparent"
-            )}
-        >
+        <header className="relative top-0 z-50 w-full bg-white border-b border-border shadow-sm">
             <div className="container mx-auto px-4 md:px-8">
-                <div className="flex items-center justify-between">
+                <div className="flex h-16 items-center justify-between">
                     {/* Logo */}
-                    <Link href="/" className="flex items-center gap-2 group">
-                        <div className="relative w-10 h-10 flex items-center justify-center">
-                            <div className="absolute inset-0 bg-primary rounded-xl rotate-3 group-hover:rotate-6 transition-transform"></div>
-                            <div className="absolute inset-0 bg-primary-light rounded-xl opacity-50 -rotate-3 group-hover:-rotate-6 transition-transform"></div>
-                            <span className="relative text-white font-serif font-bold text-xl">E</span>
+                    <Link href="/" className="flex items-center gap-2">
+                        <div className="flex items-center justify-center w-8 h-8 bg-primary rounded-lg">
+                            <span className="text-white font-bold text-lg leading-none pt-0.5">E</span>
                         </div>
-                        <span className={clsx(
-                            "text-xl font-serif font-bold tracking-tight transition-colors",
-                            isScrolled ? "text-primary" : "text-primary"
-                        )}>
-                            EduGlobal
-                        </span>
+                        <span className="text-lg font-bold text-text-main tracking-tight">EduGlobal</span>
                     </Link>
 
                     {/* Desktop Navigation */}
-                    <nav className="hidden md:flex items-center gap-10">
+                    <nav className="hidden md:flex items-center gap-8">
                         {navigation.map((item) => (
                             <Link
                                 key={item.name}
                                 href={item.href}
-                                className="text-sm font-medium text-text-main hover:text-accent transition-colors relative group"
+                                className="text-sm font-medium text-text-muted hover:text-primary transition-colors"
                             >
                                 {item.name}
-                                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all group-hover:w-full"></span>
                             </Link>
                         ))}
                     </nav>
 
                     {/* Actions */}
-                    <div className="hidden md:flex items-center gap-3">
-                        <button className="p-2.5 text-text-main hover:bg-white/50 rounded-full transition-all hover:scale-105">
+                    <div className="hidden md:flex items-center gap-4">
+                        <button className="text-text-muted hover:text-primary transition-colors">
                             <Search className="w-5 h-5" />
                         </button>
-                        <button className="p-2.5 text-text-main hover:bg-white/50 rounded-full transition-all hover:scale-105">
+                        <button className="text-text-muted hover:text-primary transition-colors">
                             <Globe className="w-5 h-5" />
                         </button>
+                        <div className="h-6 w-px bg-border"></div>
                         <Link
                             href="/dashboard"
-                            className="flex items-center gap-2 px-6 py-2.5 bg-primary text-white rounded-full hover:bg-primary-light transition-all shadow-lg shadow-primary/20 hover:shadow-primary/30 hover:-translate-y-0.5 font-medium text-sm"
+                            className="text-sm font-bold text-primary hover:text-accent transition-colors"
                         >
-                            <span>Sign In</span>
+                            Log in
+                        </Link>
+                        <Link
+                            href="/dashboard"
+                            className="px-4 py-2 bg-primary text-white text-sm font-bold rounded-lg hover:bg-primary-light transition-colors"
+                        >
+                            Sign up
                         </Link>
                     </div>
 
@@ -91,30 +74,23 @@ export function Header() {
 
             {/* Mobile Menu */}
             {isMenuOpen && (
-                <div className="absolute top-full left-0 w-full bg-cream/95 backdrop-blur-xl border-b border-border shadow-xl md:hidden p-6 animate-in slide-in-from-top-5">
-                    <div className="flex flex-col gap-6">
+                <div className="absolute top-full left-0 w-full bg-white border-b border-border shadow-lg md:hidden p-4">
+                    <div className="flex flex-col gap-4">
                         {navigation.map((item) => (
                             <Link
                                 key={item.name}
                                 href={item.href}
-                                className="text-lg font-serif font-medium text-text-main"
+                                className="text-base font-medium text-text-main py-2"
                                 onClick={() => setIsMenuOpen(false)}
                             >
                                 {item.name}
                             </Link>
                         ))}
-                        <div className="h-px bg-border w-full"></div>
-                        <div className="flex gap-4">
-                            <button className="flex-1 py-3 border border-border rounded-xl font-medium text-sm hover:bg-white transition-colors">Search</button>
-                            <button className="flex-1 py-3 border border-border rounded-xl font-medium text-sm hover:bg-white transition-colors">Language</button>
+                        <hr className="border-border" />
+                        <div className="flex flex-col gap-3 pt-2">
+                            <Link href="/dashboard" className="text-center py-2 text-text-main font-medium">Log in</Link>
+                            <Link href="/dashboard" className="text-center py-2 bg-primary text-white rounded-lg font-bold">Sign up</Link>
                         </div>
-                        <Link
-                            href="/dashboard"
-                            className="w-full py-3 bg-primary text-white rounded-xl font-medium text-center shadow-lg"
-                            onClick={() => setIsMenuOpen(false)}
-                        >
-                            Sign In
-                        </Link>
                     </div>
                 </div>
             )}
