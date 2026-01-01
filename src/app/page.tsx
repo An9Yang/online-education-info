@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { ArrowRight, Play, CheckCircle2, Globe, Users, MapPin } from "lucide-react";
 import { motion } from "framer-motion";
-import { RelationshipFlow } from "@/components/home/RelationshipFlow";
+import { HeroDemo } from "@/components/home/HeroDemo";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 20 },
@@ -71,7 +71,7 @@ export default function Home() {
             transition={{ delay: 0.4, duration: 0.8 }}
             className="mt-20 mx-auto max-w-6xl"
           >
-            <RelationshipFlow />
+            <HeroDemo />
           </motion.div>
         </div>
       </section>
